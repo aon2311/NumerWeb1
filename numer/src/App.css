@@ -1,0 +1,40 @@
+
+
+.app-container {
+  max-width: 500px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.app-box {
+  background-color: #fef6ea;       
+  border: 2px solid #f0bc38;       
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.app-select {
+  cursor: pointer;
+  background-color: #ffffff;      
+  padding: 10px;
+  border-radius: 5px;
+  width: 80%;
+  font-size: 16px;
+  border: 2px solid #f0bc38;      
+  margin-bottom: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.app-select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #f0bc38;     
+}
+
+.app-select:last-child {
+  margin-bottom: 0;
+}
+
+.app-select:disabled {
+  cursor: not-allowed;
+  background-color: #ffffff;
+}

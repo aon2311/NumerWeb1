@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './App.css'; // << import CSS ที่สร้างไว้
+import { useNavigate, Link } from 'react-router-dom';
+import './Navbar.css'; 
 
-function App() {
+function Navbar() {
   const [mainTopic, setMainTopic] = useState('');
   const [subTopic, setSubTopic] = useState('');
   const navigate = useNavigate();
 
   const handleMainChange = (event) => {
-    setMainTopic(event.target.value);
+    const value = event.target.value;
+    setMainTopic(value);
     setSubTopic('');
   };
 
   const handleSubChange = (event) => {
-    const selectedSub = event.target.value;
-    setSubTopic(selectedSub);
-    if (selectedSub) {
-      navigate(selectedSub);
+    const path = event.target.value;
+    setSubTopic(path);
+    if (path) {
+      navigate(path);
     }
   };
 
@@ -64,15 +65,23 @@ function App() {
     ];
   }
 
-  return (
-    <div className="app-container">
-      <h1>Numerical Project</h1>
 
-      <div className="app-box">
+  return (
+    <nav className="navbar-container">
+      <div className="navbar-home">
+        <Link to="/">
+          <img
+            src="/N.png"
+            alt="Home"
+            className="home-icon"
+          />
+        </Link>
+      </div>
+      <div className="navbar-select-group">
         <select
+          className="navbar-select"
           value={mainTopic}
           onChange={handleMainChange}
-          className="app-select"
         >
           <option value="">Choose One ▼</option>
           <option value="Root">Root of Equation</option>
@@ -84,19 +93,21 @@ function App() {
         </select>
 
         <select
+          className="navbar-select"
           value={subTopic}
           onChange={handleSubChange}
           disabled={!mainTopic}
-          className="app-select"
         >
-          <option value="">{mainTopic ? 'Choose One Again ▼' : 'Please select a main topic first.'}</option>
+          <option value="">
+            {mainTopic ? '-- Choose One Again' : 'Choose left first.'}
+          </option>
           {subOptions.map((sub, index) => (
             <option key={index} value={sub.path}>{sub.label}</option>
           ))}
         </select>
       </div>
-    </div>
+    </nav>
   );
 }
 
-export default App;
+export default Navbar;

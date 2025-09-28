@@ -1,0 +1,42 @@
+.navbar-container {
+  position: relative;
+  width: 100%;
+  background-color: #fef6ea;
+  border-bottom: 2px solid #fff1db;
+  padding: 10px 0;
+}
+
+.navbar-home {
+  position: absolute;
+  left:  20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  
+}
+
+.home-icon {
+  height: 40px;
+  width: auto;
+}
+
+.navbar-select-group {
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-select {
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 3px solid #f0bc38;
+  min-width: 200px;
+  background-color: #ffffff;
+}
+
+.navbar-select:disabled {
+  background-color: #ffffff;
+  cursor: not-allowed;
+}
