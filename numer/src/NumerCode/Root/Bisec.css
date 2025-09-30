@@ -1,0 +1,173 @@
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  
+}
+
+.Bisec {
+  display: flex;
+  justify-content: center; 
+  
+}
+
+.Bisec h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  
+}
+
+.Result {
+  display: flex;
+  justify-content: center;
+}
+
+.Result h2 {
+font-size: 2rem;
+font-weight: bold;
+text-shadow: 1px ;
+
+}
+
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 700px;
+  margin: 30px auto;
+  width: 100%;
+}
+
+
+.function-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.function-group label {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.wide-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: 2px solid #ccc;
+  text-align: center;
+}
+
+
+.parameter-group {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-box label {
+  font-weight: bold;
+}
+
+.input-box input {
+  padding: 8px 12px;
+  width: 120px;
+  text-align: center;
+  border-radius: 15px;
+  border: 2px solid #ccc;
+  transition: 0.3s;
+  font-size: 1rem;
+}
+
+.input-box input:focus {
+  border-color: #36a;
+  background-color: #f9f9f9;
+  outline: none;
+}
+
+.input-box input:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.03);
+}
+
+
+.confirm {
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.confirm:hover {
+  background-color: #28a745;
+  transform: scale(1.05);
+}
+
+
+table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: white;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  .parameter-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  .confirm {
+    width: 100%;
+  }
+}

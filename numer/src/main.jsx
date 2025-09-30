@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css'
 import App from './App.jsx'
 
+import History from './Components/History/History.jsx';
+
 import Bisec from './NumerCode/Root/Bisec.jsx';
 import False from './NumerCode/Root/False.jsx';
 import Graph from './NumerCode/Root/Graph.jsx';
@@ -68,6 +70,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/NumerCode/Extrapo/Multi" element={<Multi />} />
 
         <Route path="/NumerCode/Diff/Diff" element={<Diff />} />
+
+        <Route path="/Component/History/History" element={<History />} />
 
       </Routes>
     </BrowserRouter>

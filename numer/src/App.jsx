@@ -66,7 +66,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>Numerical Project</h1>
+      <div className='Numer'><h1>Numerical Project</h1></div>
 
       <div className="app-box">
         <select

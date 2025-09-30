@@ -77,6 +77,7 @@ function Navbar() {
           />
         </Link>
       </div>
+
       <div className="navbar-select-group">
         <select
           className="navbar-select"
@@ -105,6 +106,15 @@ function Navbar() {
             <option key={index} value={sub.path}>{sub.label}</option>
           ))}
         </select>
+      </div>
+      <div className="navbar-history">
+        <Link to="/Component/History/History">
+          <img
+            src="/history.png"
+            alt="History"
+            className="history-icon"
+          />
+        </Link>
       </div>
     </nav>
   );

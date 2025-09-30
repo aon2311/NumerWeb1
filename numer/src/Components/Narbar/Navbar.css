@@ -20,6 +20,21 @@
   width: auto;
 }
 
+.navbar-history {
+  position: absolute;
+  right:   20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  
+}
+
+.history-icon {
+  height: 50px;
+  width: auto;
+}
+
+
 .navbar-select-group {
   width: fit-content;
   margin: 0 auto;
@@ -32,8 +47,14 @@
   border-radius: 5px;
   font-size: 16px;
   border: 3px solid #f0bc38;
+  border-radius: 20px;
   min-width: 200px;
   background-color: #ffffff;
+}
+
+.navbar-select:focus{
+  outline: none;
+  box-shadow: 0 0 5px #f0bc38;
 }
 
 .navbar-select:disabled {

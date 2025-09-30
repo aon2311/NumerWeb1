@@ -8,20 +8,21 @@
 
 .app-box {
   background-color: #fef6ea;       
-  border: 2px solid #f0bc38;       
-  border-radius: 8px;
-  padding: 20px;
+  border: 3px solid #f0bc38;       
+  border-radius: 15px;
+  padding: 30px;
 }
 
 .app-select {
   cursor: pointer;
   background-color: #ffffff;      
-  padding: 10px;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 20px;
   width: 80%;
   font-size: 16px;
   border: 2px solid #f0bc38;      
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  margin-top: 10px;
   transition: box-shadow 0.2s;
 }
 
@@ -31,10 +32,16 @@
 }
 
 .app-select:last-child {
-  margin-bottom: 0;
+  margin-bottom: 1;
 }
 
 .app-select:disabled {
   cursor: not-allowed;
   background-color: #ffffff;
+}
+
+.Numer h1{
+  font-size: 3rem;
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
 }
