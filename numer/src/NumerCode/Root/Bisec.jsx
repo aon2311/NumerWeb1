@@ -7,9 +7,9 @@ import { evaluate, row } from "mathjs";
 function Bisec () {
     
     const [fx,setFx] = useState("x^4 - 13")
-    const [xl,setXl] = useState("")
-    const [xr,setXr] =useState("")
-    const [tolerance,setTolerance] =useState("")
+    const [xl,setXl] = useState("1.5")
+    const [xr,setXr] =useState("2.0")
+    const [tolerance,setTolerance] =useState("0.000001")
     const [result,setResult]= useState([])
     const [saveStatus,setStatus] = useState("")
 
@@ -34,6 +34,7 @@ function Bisec () {
 
         while (error>tol) {
             XM =(XL+XR)/2
+            const fxm=f(XM)
 
             if(iteration >0){
                 error = Math.abs ((XM-old_XM)/XM)
@@ -44,10 +45,11 @@ function Bisec () {
                 XL: XL.toFixed(6),
                 XR: XR.toFixed(6),
                 XM: XM.toFixed(6),
+                fxm:f(XM).toFixed(6),
                 error: error.toFixed(tolerance.length-2)||"N/A",
             })
 
-            if(f(XM)*f(XR)>0){
+            if(fxm*f(XR)>0){
                 XR=XM;
             }
             else{
@@ -77,7 +79,7 @@ function Bisec () {
             <div className="input-container">
                 <div className="function-group">
                     <label>Function f(x)</label>
-                    <input className="wide-input" value={fx} onChange={(e) => setFx(e.target.value)} placeholder="Enter function,  x^4 - 13" />
+                    <input className="wide-input" value={fx} onChange={(e) => setFx(e.target.value)} placeholder="x^4 - 13" />
                 </div>
 
                 <div className="parameter-group">
@@ -112,6 +114,7 @@ function Bisec () {
             <tr>
             <th>Iteration</th>
             <th>XM</th>
+            <th>f(XM)</th>
             <th>XL</th>
             <th>XR</th>
             <th>Error</th>
@@ -122,6 +125,7 @@ function Bisec () {
             <tr key={idx}>
                 <td>{row.iteration}</td>
                 <td>{row.XM}</td>
+                <td>{row.fxm}</td>
                 <td>{row.XL}</td>
                 <td>{row.XR}</td>
                 <td>{row.error}</td>
