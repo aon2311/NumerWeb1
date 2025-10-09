@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "../../Components/Narbar/Navbar";
 import {evaluate,row} from 'mathjs'
 import './Graph.css'
+import Plot from "react-plotly.js";
 
 function Graph () {
 
@@ -67,7 +68,10 @@ function Graph () {
         setResult({ x: xv, y: yv });
         setResultLogs(logs);
         
-    };
+    }
+    
+    const iterationValues = resultLogs.map(r => r.iteration);
+    const errorValues = resultLogs.map(r => parseFloat(r.error));
 
     return(
         <>
@@ -105,6 +109,32 @@ function Graph () {
 
             </div>
             <button className="confirm" onClick={CalGraph}>Confirm</button>
+
+            {resultLogs.length > 0 && (
+            <div className="graph-container">
+                <h2>Graph: Error vs Iteration</h2>
+                <Plot
+                data={[
+                    {
+                    x: iterationValues,
+                    y: errorValues,
+                    type: "scatter",
+                    mode: "lines+markers",
+                    marker: { color: "red" },
+                    name: "Error vs Iteration"
+                    }
+                ]}
+                layout={{
+                    width: 700,
+                    height: 400,
+                    title: "Graph of Error vs Iteration",
+                    xaxis: { title: "Iteration" },
+                    yaxis: { title: "Error", type: "log" }
+                }}
+                />
+            </div>
+            )}
+
 
             {saveStatus && (
                 <div style={{color: saveStatus.includes("Fail")? "red": "green",marigTop:"10px"}}>

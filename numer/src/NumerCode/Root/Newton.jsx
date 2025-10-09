@@ -93,7 +93,7 @@ function Newton() {
                 <Plot
                 data={[
                     {
-                    x: iterationValues,  // แกน X เป็น Iteration
+                    x: iterationValues,  
                     y: errorValues,
                     type: "scatter",
                     mode: "lines+markers",

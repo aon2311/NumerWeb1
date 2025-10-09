@@ -2,13 +2,14 @@ import Navbar from "../../Components/Narbar/Navbar";
 import "./One.css"
 import { useState } from "react";
 import { evaluate,row } from "mathjs";
+import Plot from "react-plotly.js";
 
 
 function One () {
 
     const [fx,setFx] = useState("(1+43x)/86")
     const [x0,setX0] =useState ("1")
-    const [tolerance,setTolerance] = useState("0.1")
+    const [tolerance,setTolerance] = useState("0.000001")
     const [result,setResult] = useState([])
     const [saveStatus,setStatus] =useState("")
 
@@ -53,6 +54,9 @@ function One () {
         setResult(logs)
     }
 
+    const iterationValues = result.map(r => r.iteration);
+    const errorValues = result.map(r => parseFloat(r.error));
+
     return(
         <>
             <div><Navbar/></div>
@@ -80,6 +84,31 @@ function One () {
             </div>
 
             <button className="confirm" onClick={CalOne}>Confirm</button>
+
+            {result.length > 0 && (
+            <div className="graph-container">
+                <h2>Graph: Error vs Iteration</h2>
+                <Plot
+                data={[
+                    {
+                    x: iterationValues,  
+                    y: errorValues,
+                    type: "scatter",
+                    mode: "lines+markers",
+                    marker: { color: "red" },
+                    name: "Error vs Iteration"
+                    }
+                ]}
+                layout={{
+                    width: 700,
+                    height: 400,
+                    title: "Graph of Error vs Iteration",
+                    xaxis: { title: "Iteration" },
+                    yaxis: { title: "Error", type: "log" }
+                }}
+                />
+            </div>
+            )}
 
             {saveStatus && (
                 <div style={{ color: saveStatus.includes("Fail") ? "red" : "green", marginTop: "10px" }}>

@@ -2,6 +2,7 @@ import Navbar from "../../Components/Narbar/Navbar";
 import "./False.css"
 import { useState } from "react";
 import {evaluate,row} from "mathjs"
+import Plot from "react-plotly.js";
 
 function False () {
 
@@ -68,9 +69,8 @@ function False () {
 
         }
         setResult(logs);
-        //---
-        ///---
-
+        
+        
     }
 
     return(
@@ -105,6 +105,31 @@ function False () {
             </div>
 
             <button className="confirm" onClick={CalFalse}>Confirm</button>
+
+{result.length > 0 && (
+        <div className="graph-container">
+            <h2>Graph: Error vs Iteration</h2>
+            <Plot
+            data={[
+                {
+                x: result.map(r => r.iteration),
+                y: result.map(r => parseFloat(r.error)),
+                    type: "scatter",
+                    mode: "lines+markers",
+                    marker: { color: "red" },
+                    name: "Error vs Iteration"
+                    }
+                ]}
+                layout={{
+                    width: 700,
+                    height: 400,
+                    title: "Graph of Error vs Iteration",
+                    xaxis: { title: "Iteration" },
+                    yaxis: { title: "Error", type: "log" }
+                }}
+                />
+            </div>
+            )}
 
             {saveStatus && (
                 <div style={{color:saveStatus.includes("Fail")?"red": "green",marginTop: "10px"}}>
