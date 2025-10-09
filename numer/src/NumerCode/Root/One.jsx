@@ -8,7 +8,7 @@ function One () {
 
     const [fx,setFx] = useState("(1+43x)/86")
     const [x0,setX0] =useState ("1")
-    const [tolerance,setTolerance] = useState("0.000001")
+    const [tolerance,setTolerance] = useState("0.1")
     const [result,setResult] = useState([])
     const [saveStatus,setStatus] =useState("")
 
@@ -56,7 +56,7 @@ function One () {
     return(
         <>
             <div><Navbar/></div>
-            <div className="One"><h1>One-point Iteration Methods</h1></div>
+            <div className="One"><h1>One-Point Iteration Methods</h1></div>
             <div className="Container">
                 <div className="input-container">
                     <div className="function-group">

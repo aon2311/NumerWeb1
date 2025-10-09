@@ -6,9 +6,9 @@ import './Graph.css'
 function Graph () {
 
     const [fx, setFx] = useState("43*x-180");
-    const [xs, setXs] = useState("");
-    const [xe, setXe] = useState("");
-    const [tolerance, setTolerance] = useState("");
+    const [xs, setXs] = useState("0.0");
+    const [xe, setXe] = useState("10.0");
+    const [tolerance, setTolerance] = useState("0.1");
     const [resultLogs, setResultLogs] = useState([]);
     const [result, setResult] = useState({ x: [], y: [] });
     const [saveStatus, setStatus] = useState("");
