@@ -43,6 +43,7 @@ function False () {
             if(iteration>0){
                 error=Math.abs((X1-old_X1)/X1)
             }
+            
 
             logs.push({
                 iteration:iteration,

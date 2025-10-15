@@ -1,0 +1,206 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  max-width: 1000px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.Cramer {
+  display: flex;
+  justify-content: center;
+}
+
+.Cramer h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 700px;
+  margin: 30px auto;
+  width: 100%;
+  position: relative; 
+  padding-bottom: 80px; 
+}
+
+.parameter-group {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-box label {
+  font-weight: bold;
+}
+
+.input-box input {
+  padding: 8px 12px;
+  width: 120px;
+  text-align: center;
+  border-radius: 15px;
+  border: 2px solid #ccc;
+  transition: 0.3s;
+  font-size: 1rem;
+}
+
+.input-box input:focus {
+  border-color: #36a;
+  background-color: #f9f9f9;
+  outline: none;
+}
+
+.input-box input:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.03);
+}
+
+.matrix-group {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.A-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.B-matrix.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+
+.B-matrix.vertical input {
+  width: 40px;
+  height: 30px;
+  padding: 8px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: 0.2s ease;
+}
+
+.B-matrix.vertical input:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #f5faff;
+}
+
+.matrix-group {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.A-container,
+.B-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px;
+  min-width: 150px; 
+}
+
+
+.A-matrix input,
+.B-matrix input {
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+}
+
+.confirm {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  width: auto;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.confirm:hover {
+  background-color: #28a745;
+  transform: scale(1.05);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
+}
+
+.result h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.result p {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+  .parameter-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .A-matrix,
+  .B-matrix {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .confirm {
+    width: 100%;
+  }
+}
