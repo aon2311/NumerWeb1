@@ -9,12 +9,15 @@ function Cramer() {
   const [b, setB] = useState([]);
   const [tolerance, setTolerance] = useState("0.00001");
   const [result, setResult] = useState([]);
+  const [detA, setDetA] = useState(null);
+
 
   const handleNChange = (e) => {
     const size = parseInt(e.target.value);
     setN(size);
     const A = Array.from({ length: size }, () => Array(size).fill(""));
     const B = Array(size).fill("");
+    
     setA(A);
     setB(B);
     setResult([]);
@@ -45,6 +48,7 @@ function Cramer() {
       alert("det(A) is 0, can't use Cramer's Rule");
       return;
     }
+    setDetA(detA.toFixed(6));
 
     let logs = [];
 
@@ -59,6 +63,7 @@ function Cramer() {
       results[i] = detAi / detA;
       logs.push({
         [`x${i + 1}`]: results[i].toFixed(tolerance.length - 2),
+        detA:detA.toFixed(6),
       });
     }
 
@@ -111,6 +116,7 @@ function Cramer() {
                 {result.length > 0 && (
                     <div className="result">
                     <h3>Result (X)</h3>
+                     <p>detA = {detA}</p>
                     {result.map((x, i) => (
                         <p key={i}>X{i + 1} = {Object.values(x)[0]}</p>
                     ))}
