@@ -45,16 +45,16 @@ function Sim() {
         let I_tr = Integrate(A,B)
         const logs=[]
 
-        if (error>iteration) {
-            let I=IntegrateFx(A,B)
-            error = Math.abs((I_tr-I)/I_tr)
+        
+        let I=IntegrateFx(A,B)
+        error = Math.abs((I_tr-I)/I_tr)
             
-            logs.push({
-                I:I.toFixed(6),
-                error:error.toFixed(tolerance.length-2)||"N/A",
-            })
+        logs.push({
+            I:I.toFixed(6),
+            error:error.toFixed(tolerance.length-2)||"N/A",
+        })
              
-        }
+        
         setResult(logs)
     }
 
@@ -89,6 +89,7 @@ function Sim() {
 
             <button className="confirm" onClick={CalSim}>Confirm</button>
 
+            <div className="Result"><h2>Result</h2></div>
             <table>
                 <thead>
                     <tr>

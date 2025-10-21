@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {evaluate} from "mathjs"
+import {count, evaluate} from "mathjs"
 import Navbar from "../../Components/Narbar/Navbar"
 import "./Com_Sim.css"
 import Plot from "react-plotly.js"
@@ -11,24 +11,47 @@ function Com_Sim() {
     const [a,setA] = useState("-2")
     const [b,setB] =useState("4")
     const [tolerance,setTolerance] =useState("0.000001")
+    const [xi,setXi] =useState([])
     const [result,setResult] = useState([])
 
     const f=(x)=>evaluate(fx,{x})
 
-    const IntegrateFx=(f,a,b,n)=>{
-        const h=(b-a)/(n)
-        let sum = f(a)+f(b) 
-        for(let i=1;i<n;i++){
-            let x = a+(i*h)
-            if (n%2==1) {
-                sum+= 4*f(x)
-            }
-            else{
-                sum+= 2*f(x)
-            }
+    const Integrate =(a,b,step=1000)=>{
+        const h = (b-a)/step
+        let sum = f(a)+f(b)
+        for(let i=1;i<step;i++){
+            
+            const x0=a+(i*h)
+            if (x0 > b) break
+            const x1 = x0+h
+            const xh = (x0+x1)/2
+            sum+=4*f(xh)
         }
-        return h/3 *sum
+        return h/3*sum
     }
+
+    const IntegrateFx = (a, b, n) => {
+        const h = (b - a) / (2*n)
+        let sum = f(a) + f(b)  
+
+        const xip = [];
+        xip.push({ i: 0, x: a, fx: f(a), weight: 1 })
+
+        for (let i = 1; i < n; i++) {
+            const x = a + i * h
+            const fxi = f(x)
+            const weight = i % 2 === 0 ? 2 : 4  
+            sum += weight * fxi
+            xip.push({ i, x, fx: fxi, weight })
+        }
+
+        xip.push({ i: n, x: b, fx: f(b), weight: 1 })
+
+        setXi(xip)
+
+        return (h / 3) * sum
+    }
+
 
     const CalComsim =()=>{
         let N=parseInt(n)
@@ -48,14 +71,18 @@ function Com_Sim() {
 
         let iteration =0
         let error =1
-        let I_old=0
+        let I_T=Integrate(A,B)
+        let Nt= N
         const logs=[]
 
         while (error>Tol) {
-            const I = IntegrateFx(f,A,B,N)
-            if(I!==0){
-                error = Math.abs((I-I_old)/I)
+            if(N === Nt){
+                const I = IntegrateFx(A,B,N)
             }
+            
+            
+            error = Math.abs((I_T-I)/I_T)
+            
             
 
             logs.push({
@@ -69,7 +96,7 @@ function Com_Sim() {
             I_old=I
             iteration++
             N=N+2
-            if(iteration>1000){
+            if(iteration>100){
                 break
             }
         }
@@ -144,19 +171,25 @@ function Com_Sim() {
         <table>
             <thead>
                 <tr>
-                    <th>Iteration</th>
-                    <th>F(x)</th>
-                    <th>Error</th>
+                    <th>i</th>
+                    <th>xᵢ</th>
+                    <th>f(xᵢ)</th>
+                    <th>Weight</th>
                 </tr>
             </thead>
             <tbody>
-                {result.map((row,idx)=>(
+                {xi.map((row,idx)=>(
                     <tr key ={idx}>
-                        <td>{row.iteration}</td>
-                        <td>{row.I}</td>
-                        <td>{row.error}</td>
+                        <td>{row.i}</td>
+                        <td>{row.x.toFixed(6)}</td>
+                        <td>{row.fx.toFixed(6)}</td>
+                        <td>{row.weight}</td>
                     </tr>
                 ))}
+                <tr>
+                    <td colSpan="3"><strong>Approximate ∫ f(x) dx</strong></td>
+                    <td><strong>{result.length > 0 ? result[result.length - 1].I : "N/A"}</strong></td>
+                </tr>
             </tbody>
         </table>
         </>
