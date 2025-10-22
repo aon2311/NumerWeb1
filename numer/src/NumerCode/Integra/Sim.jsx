@@ -93,6 +93,27 @@ function Sim() {
 
             <button className="confirm" onClick={CalSim}>Confirm</button>
 
+            <div className="Result"><h2>Result</h2></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Integrate True</th>
+                        <th>F(x)</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {result.map((row,idx)=>(
+                        <tr key ={idx}>
+                            <td>{row.I_tr}</td>
+                            <td>{row.I}</td>
+                            <td>{row.error}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+
             {result.length >0 &&(
                 <div className="graph-container">
                     <Plot
@@ -136,26 +157,7 @@ function Sim() {
                 </div>
             )}
 
-            <div className="Result"><h2>Result</h2></div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Integrate True</th>
-                        <th>F(x)</th>
-                        <th>Error</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {result.map((row,idx)=>(
-                        <tr key ={idx}>
-                            <td>{row.I_tr}</td>
-                            <td>{row.I}</td>
-                            <td>{row.error}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
+            
 
 
 
