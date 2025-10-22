@@ -1,6 +1,6 @@
 import Navbar from "../../Components/Narbar/Navbar";
 import "./Bisec.css"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { evaluate, row } from "mathjs";
 import Plot from "react-plotly.js";
 
@@ -12,7 +12,46 @@ function Bisec () {
     const [xr,setXr] =useState("2.0")
     const [tolerance,setTolerance] =useState("0.000001")
     const [result,setResult]= useState([])
-    const [saveStatus,setStatus] = useState("")
+    const [problems, setProblems] = useState([])
+    const [saveStatus, setStatus] = useState("")
+
+    useEffect(() => {
+        fetch("http://localhost:8081/api/bisection")
+        .then((res) => res.json())
+        .then((data) => {
+            setProblems(data);
+            if (data.length > 0) {
+            const problem = data[0];
+            setFx(problem.fx);
+            setXl(problem.xl.toString());
+            setXr(problem.xr.toString());
+            setTolerance(problem.tolerance.toString());
+            }
+        })
+        .catch((err) => console.error("Error fetching problems:", err));
+    }, []);
+
+    const saveProblem = () => {
+        fetch("http://localhost:8081/api/bisection", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fx: fx,
+                xl: parseFloat(xl),
+                xr: parseFloat(xr),
+                tolerance: parseFloat(tolerance),
+            }),
+        })
+            .then(res => res.json())
+            .then(data => {
+            setStatus(data.message);
+            })
+            .catch(err => {
+            setStatus("Failed to save problem.");
+            console.error(err);
+            });
+        };
+
 
     const CalBisec= ()=>{
         let XL = parseFloat(xl)
@@ -70,6 +109,9 @@ function Bisec () {
 
 
     }
+
+
+
     return (
     <>
         <div><Navbar /></div>
@@ -100,7 +142,14 @@ function Bisec () {
             </div>
         </div>
 
-        <button className="confirm" onClick={CalBisec}>Confirm</button>
+        <button className="confirm" onClick={CalBisec} >Confirm</button>
+        <button className="save" onClick={saveProblem}>Save Problem</button>
+
+        {saveStatus && (
+            <div className={`save-status ${saveStatus.includes("Failed") ? "error" : "success"}`}>
+                {saveStatus}
+            </div>
+        )}
 
         {result.length > 0 && (
         <div className="graph-container">
@@ -128,11 +177,7 @@ function Bisec () {
             )}
 
 
-        {saveStatus && (
-        <div style={{ color: saveStatus.includes("Fail") ? "red" : "green", marginTop: "10px" }}>
-            {saveStatus}
-        </div>
-        )}
+        
 
         <div className="Result"><h2>Result</h2></div>
         <table>
@@ -159,7 +204,22 @@ function Bisec () {
             ))}
         </tbody>
         </table>
+
+            <div className="problems-container">
+                <h1>Bisection Problems</h1>
+                {problems.map(problem => (
+                    <div key={problem.id} className="problem-item">
+                    <p><strong>Function:</strong> {problem.fx}</p>
+                    <p><strong>XL:</strong> {problem.xl}</p>
+                    <p><strong>XR:</strong> {problem.xr}</p>
+                    <p><strong>Tolerance:</strong> {problem.tolerance}</p>
+                    <p><strong>Date:</strong> {new Date(problem.date).toLocaleString()}</p>
+                    </div>
+                ))}
+                </div>
     </>
+
+    
     );
 }
 export default Bisec;
