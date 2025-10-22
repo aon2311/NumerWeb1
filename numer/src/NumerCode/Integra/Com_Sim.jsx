@@ -24,7 +24,7 @@ function Com_Sim() {
     for (let i = 1; i < n; i++) {
       const x = a + i * h
       const fx_val = f(x)
-      const weight = i % 2 === 0 ? 2 : 4;
+      const weight = i % 2 === 0 ? 2 : 4
       sum += weight * fx_val
       xip.push({ i, x, fx: fx_val, weight })
     }
@@ -224,14 +224,8 @@ function Com_Sim() {
             </tr>
           ))}
           <tr>
-            <td colSpan="1">
-              <strong>Approximate ∫ f(x) dx</strong>
-            </td>
-            <td>
-              <strong>
-                {result.length > 0 ? result[result.length - 1].I : "N/A"}
-              </strong>
-            </td>
+            <td colSpan="1"><h3><strong>Approximate ∫ f(x) dx</strong></h3></td>
+            <td><h3><strong>{result.length > 0 ? result[result.length - 1].I : "N/A"}</strong></h3></td>
           </tr>
         </tbody>
       </table>
