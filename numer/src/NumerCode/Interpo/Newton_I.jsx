@@ -90,7 +90,7 @@ function Newton_I() {
                 setSingleError(null)
             }
 
-            const error = Math.abs(fxV) < 1e-12 ? 0 : Math.abs((fxV - px) / fxV);
+            const error = Math.abs(fxV) < 1e-12 ? 0 : Math.abs((fxV - px) / fxV)
 
             logs.push({
                 x: xx,
