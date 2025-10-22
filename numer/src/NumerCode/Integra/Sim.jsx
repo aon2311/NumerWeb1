@@ -2,11 +2,12 @@ import Navbar from "../../Components/Narbar/Navbar"
 import { useState } from "react"
 import { evaluate } from "mathjs";
 import "./Sim.css"
+import Plot from "react-plotly.js";
 
 function Sim() {
-    const [fx,setFx] = useState("x^2")
-    const [a,setA] = useState ("-2")
-    const [b,setB] = useState("4")
+    const [fx,setFx] = useState("(x^7)+(2*x^3)-1")
+    const [a,setA] = useState ("-1")
+    const [b,setB] = useState("2")
     const [tolerance,setTolerance] = useState("0.000001")
     const [result,setResult] = useState([]) 
     
@@ -14,18 +15,18 @@ function Sim() {
 
     const IntegrateFx=(a,b)=>{
         const h=(b-a)/2
-        let sum = f(a) +(4*f(h))+ f(b)
+        let sum = f(a) +(f(a+h)*4)+ f(b)
         return (h/3) *sum
     }
 
-    const Integrate=(a,b,step=1000)=>{
+    const Integrate=(a,b,step=10000)=>{
         const h= (b-a)/step
-        let xx = f(a)+f(b)
+        let xx = 0
         for(let i = 1 ;i<step;i++){
             const x0=a+(i*h)
-            const  x1=x0+h
-            const xh=(x1+x0)/2
-            xx+=4*f(xh)
+            
+            const xt= i%2===0 ? 2:4
+            xx+=xt*f(x0)
         }
         return h/3 * xx
 
@@ -51,6 +52,9 @@ function Sim() {
             
         logs.push({
             I:I.toFixed(6),
+            I_tr:I_tr.toFixed(6),
+            A:A.toFixed(6),
+            B:B.toFixed(6),
             error:error.toFixed(tolerance.length-2)||"N/A",
         })
              
@@ -89,10 +93,54 @@ function Sim() {
 
             <button className="confirm" onClick={CalSim}>Confirm</button>
 
+            {result.length >0 &&(
+                <div className="graph-container">
+                    <Plot
+                        data={[
+                                {
+                                x: Array.from({ length: 1000 }, (_, i) => {
+                                    const A = parseFloat(a);
+                                    const B = parseFloat(b);
+                                    const step = (B - A) / 999;
+                                    return A + i * step;
+                                }),
+                                y: Array.from({ length: 1000 }, (_, i) => {
+                                    const A = parseFloat(a);
+                                    const B = parseFloat(b);
+                                    const step = (B - A) / 999;
+                                    const xVal = A + i * step;
+                                    try {
+                                        return f(xVal);
+                                    } catch (error) {
+                                        return 0;
+                                    }
+                                }),    
+                                    type: "scatter",
+                                    mode: "lines",
+                                    fill: "tozeroy",
+                                    fillcolor: "rgba(255, 99, 132, 0.4)",
+                                    line: { color: "red" },
+                                    name: "f(x)",
+                                    }
+                            ]}
+                        layout={(
+                            {
+                                width : "700",
+                                height : "400",
+                                title :"Integrate True vs A-B",
+                                xaxis :{title : "Integrate True"},
+                                yaxis :{title : "Integrate "},
+                            }
+                        )}
+                    />
+                </div>
+            )}
+
             <div className="Result"><h2>Result</h2></div>
             <table>
                 <thead>
                     <tr>
+                        <th>Integrate True</th>
                         <th>F(x)</th>
                         <th>Error</th>
                     </tr>
@@ -100,6 +148,7 @@ function Sim() {
                 <tbody>
                     {result.map((row,idx)=>(
                         <tr key ={idx}>
+                            <td>{row.I_tr}</td>
                             <td>{row.I}</td>
                             <td>{row.error}</td>
                         </tr>
