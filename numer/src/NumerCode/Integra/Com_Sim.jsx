@@ -16,36 +16,37 @@ function Com_Sim() {
 
     const f=(x)=>evaluate(fx,{x})
 
-    const Integrate =(a,b,step=1000)=>{
-        const h = (b-a)/step
-        let sum = f(a)+f(b)
-        for(let i=1;i<step;i++){
-            
+    const Integrate=(a,b,step=10000)=>{
+        const h= (b-a)/step
+        let xx = 0
+        for(let i = 1 ;i<step;i++){
             const x0=a+(i*h)
-            if (x0 > b) break
-            const x1 = x0+h
-            const xh = (x0+x1)/2
-            sum+=4*f(xh)
+            const xt= i%2===0 ? 2:4
+            xx+=xt*f(x0)
         }
-        return h/3*sum
+        return h/3 * xx
+
     }
 
     const IntegrateFx = (a, b, n) => {
         const h = (b - a) / (2*n)
-        let sum = f(a) + f(b)  
+        let sum = 0  
 
-        const xip = [];
-        xip.push({ i: 0, x: a, fx: f(a), weight: 1 })
+        const xip = []
+        
 
-        for (let i = 1; i < n; i++) {
+        for (let i = 0; i < n; i++) {
             const x = a + i * h
             const fxi = f(x)
-            const weight = i % 2 === 0 ? 2 : 4  
-            sum += weight * fxi
-            xip.push({ i, x, fx: fxi, weight })
+            if(i%2===0){
+                sum=sum+(4*f(x))
+            }
+            else{
+                sum=sum+(2*f(x))
+            }  
+            
+            xip.push({fxi})
         }
-
-        xip.push({ i: n, x: b, fx: f(b), weight: 1 })
 
         setXi(xip)
 
@@ -75,31 +76,22 @@ function Com_Sim() {
         let Nt= N
         const logs=[]
 
-        while (error>Tol) {
-            if(N === Nt){
-                const I = IntegrateFx(A,B,N)
-            }
+        
+        const I = IntegrateFx(A,B,N)
+        error = Math.abs((I_T-I)/I_T)
+        logs.push({
+            iteration:iteration,
+            I:I.toFixed(6),
+            I_T:I_T.toFixed(6),
+            A:A.toFixed(6),
+            B:B.toFixed(6),
+            error:error.toFixed(tolerance.length-2)||"N/A",
+        })    
+        
             
-            
-            error = Math.abs((I_T-I)/I_T)
-            
-            
-
-            logs.push({
-                iteration:iteration,
-                I:I.toFixed(6),
-                A:A.toFixed(6),
-                B:B.toFixed(6),
-                error:error.toFixed(tolerance.length-2)||"N/A",
-            })
-
-            I_old=I
-            iteration++
-            N=N+2
-            if(iteration>100){
-                break
-            }
-        }
+        N=N+2
+        
+        
         setResult(logs)
     }
 
