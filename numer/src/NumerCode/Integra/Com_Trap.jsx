@@ -3,6 +3,7 @@ import { evaluate } from "mathjs"
 import Navbar from "../../Components/Narbar/Navbar"
 import "./Com_Trap.css"
 import Plot from "react-plotly.js"
+import { useEffect } from "react"
 
 function Com_Trap() {
   const [fx, setFx] = useState("x^2")
@@ -12,6 +13,48 @@ function Com_Trap() {
   const [tolerance, setTolerance] = useState("0.000001")
   const [xi, setXi] = useState([]);
   const [result, setResult] = useState([])
+  const [problems, setProblems] = useState([])
+  const [saveStatus, setStatus] = useState("")
+
+  useEffect(()=>{
+    fetch("http://localhost:8081/api/comtrap")
+    .then((res)=>res.json())
+    .then((data)=>{
+      setProblems(data)
+      if(data.length>0){
+        const problem = data[0]
+        setFx(problem.fx)
+        setN(problem.n.toFixed())
+        setA(problem.a.toFixed())
+        setB(problem.b.toFixed())
+        setTolerance(problem.tolerance.toFixed())
+
+      }
+    })
+    .catch((err)=>console.error("Error fetching problems:", err))
+  },[])
+
+  const saveProblem = () => {
+    fetch("http://localhost:8081/api/comtrap", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fx: fx,
+        n: parseFloat(n),
+        a: parseFloat(a),
+        b: parseFloat(b),
+        tolerance: parseFloat(tolerance),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setStatus(data.message)
+      })
+      .catch((err) => {
+        setStatus("Failed to save problem.")
+        console.error(err)
+      })
+  }
 
   const f=(x)=>evaluate(fx,{x})
   
@@ -120,7 +163,7 @@ function Com_Trap() {
       </div>
 
       <button className="confirm" onClick={CalComtrap}>Confirm</button>
-       
+       <button className="save" onClick={saveProblem}>SavePloblem</button>
       
 
       {result.length > 0 && (
@@ -227,6 +270,19 @@ function Com_Trap() {
           </tr>
         </tbody>
       </table>
+      <div className="problems-container">
+          <h1>Composition Simpson's Problems</h1>
+          {problems.map(problem=>(
+            <div key={problem.id} className="problem-item">
+              <p><strong>Function:</strong>{problem.fx}</p>
+              <p><strong>N:</strong>{problem.n}</p>
+              <p><strong>A:</strong>{problem.a}</p>
+              <p><strong>B:</strong>{problem.b}</p>
+              <p><strong>Tolerance:</strong>{problem.tolerance}</p>
+              <p><strong>Date:</strong>{new Date(problem.date).toLocaleDateString()}</p>
+            </div>
+          ))}
+      </div>
     </>
   );
 }

@@ -47,16 +47,39 @@ app.post('/api/bisection', (req, res) => {
       return res.status(500).json({ error: err.message });
     }
     res.json({ message: "Problem saved successfully!", id: result.insertId });
-  });
-});
+  })
+})
 app.get('/api/bisection', (req, res) => {
-  const sql = "SELECT * FROM bisection_problems";
+  const sql = "SELECT * FROM bisection_problems"
   db.query(sql, (err, data) => {
-    if (err) return res.status(500).json(err);
-    return res.json(data);
-  });
-});
+    if (err) return res.status(500).json(err)
+    return res.json(data)
+  })
+})
 //------------------------------------
+//-------comtrap
+app.post('/api/comtrap',(req,res)=>{
+  const {fx,n,a,b,tolerance} =req.body
+  console.log("Received POST:",{fx,n,a,b,tolerance})
+  const sql = "INSERT INTO comtrap_problems (fx,n,a,b,tolerance,date) VALUES (?,?,?,?,?,NOW())"
+  db.query(sql,[fx,n,a,b,tolerance],(err,result)=>{
+    if(err){
+      console.error("DB Insert error:",err)
+      return res.status(500).json({error:err.message})
+    }
+    res.json({message:"Problem saved successfully!",id :result.insertId})
+  })
+})
+
+app.get('/api/comtrap',(req,res)=>{
+  const sql = "SELECT * FROM comtrap_problems"
+  db.query(sql,(err,data)=>{
+    if(err) return res.status(500).json(err)
+      return res.json(data)
+  })
+})
+
+//--------------
 app.listen(8081, () => {
     console.log("listening on port 8081");
 })
